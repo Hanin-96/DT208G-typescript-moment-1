@@ -8,19 +8,27 @@ interface CourseInfo {
     syllabus : string
 }
 
-function courses(courseInfo: CourseInfo) : void {
-    console.log(courseInfo.code);
-    console.log(courseInfo.name);
-    console.log(courseInfo.progression);
-    console.log(courseInfo.syllabus);
+//Hämta submitknapp
+let btnSubmit = document.getElementById("btn-submit") as HTMLInputElement;
+btnSubmit.addEventListener("click", submitCourse);
+
+function submitCourse() : void {
+    let course: CourseInfo = {} as CourseInfo;
+    
+    //Hämta DOM element
+    let courseCodeInput = document.getElementById("course-code") as HTMLInputElement;
+    let courseNameInput = document.getElementById("course-name") as HTMLInputElement;
+    let courseProgInput = document.getElementById("course-prog") as HTMLSelectElement;
+    let courseLinkInput = document.getElementById("course-link") as HTMLInputElement;
+
+    //Lägga in värden i course
+    course.code = courseCodeInput.value;
+    course.name = courseNameInput.value;
+    course.progression = courseProgInput.value;
+    course.syllabus = courseLinkInput.value;
+
+    console.log(course);
+
+
+
 }
-
-//test objekt att sätta in i funktion
-const newCourse: CourseInfo = {
-    code: "dt210g",
-    name: "webbteknik",
-    progression:"A",
-    syllabus: "url-länk"
-};
-
-courses(newCourse);
