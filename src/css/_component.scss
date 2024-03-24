@@ -1,0 +1,20 @@
+@use 'typography';
+@use 'base';
+
+/*Icon component*/
+.fa-solid {
+    margin-left: 0.5rem;
+}
+
+#btn-submit {
+    font-size: typography.$btn-size;
+    background-color: base.$bg-green;
+    color: typography.$text-light;
+    margin-top: base.$padding-base;
+    cursor: pointer;
+}
+
+#btn-clear {
+    font-size: typography.$btn-size;
+    cursor: pointer;
+}

@@ -1,3 +1,4 @@
+@use 'base';
 
 /*Typsnitt*/
 $font-base : "Source Sans 3", sans-serif;
@@ -10,3 +11,22 @@ $text-light: #ffffff;
 $text-p-size : 1.8rem;
 
 $h1-font-size : 4.2rem;
+$h2-font-size : 3.2rem;
+$btn-size : 2.4rem;
+
+h1 {
+    font-size: $h1-font-size;
+    max-width: 100rem;
+    width: 100%;
+    padding: base.$padding-base;
+    margin: 0 auto;
+}
+
+h2 {
+    font-size: $h2-font-size;
+    background-color: base.$bg-purple;
+    color: $text-light;
+    padding: base.$padding-base;
+    margin-bottom: base.$margin-base;;
+}
+

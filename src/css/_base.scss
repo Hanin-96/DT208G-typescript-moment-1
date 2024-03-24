@@ -1,3 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
 
 /*margin & padding*/
 $padding-base : 2rem;
@@ -7,7 +16,8 @@ $margin-base : 2rem;
 $total-width : 1920px;
 
 /*Färger*/
-$bg-beige : #FEFDF9;
+$bg-beige : #fffcf1;
 $bg-grey : #DDDDDD;
 $bg-purple : #6B2D5C;
 $bg-green : #172E05;
+

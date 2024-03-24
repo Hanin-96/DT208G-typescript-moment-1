@@ -1,0 +1,8 @@
+@use 'base';
+@use 'typography';
+
+header {
+    background-color: base.$bg-green;
+    padding: base.$padding-base;
+    color: typography.$text-light;
+}

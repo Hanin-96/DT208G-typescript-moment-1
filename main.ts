@@ -50,14 +50,19 @@ function createCourse(course: CourseInfo): void {
     let courseNameP = document.createElement("p");
     let courseProgP = document.createElement("p");
     let courseLinkEl = document.createElement("a");
+    const iconLink = document.createElement("i");
 
     //Fyller elementen med värden från input
     courseCodeP.innerHTML = `${course.code}`;
     courseNameP.innerHTML = `${course.name}`;
     courseProgP.innerHTML = `${course.progression}`;
-    courseLinkEl.innerHTML = `Extern länk`;
+    courseLinkEl.innerHTML = `Länk till kurs`;
 
     courseLinkEl.href = course.syllabus;
+
+    iconLink.className = `fa-solid fa-arrow-up-right-from-square`;
+
+    courseLinkEl.appendChild(iconLink);
 
     courseArticle.appendChild(courseCodeP);
     courseArticle.appendChild(courseNameP);
