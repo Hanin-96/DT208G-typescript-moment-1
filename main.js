@@ -8,20 +8,22 @@ var btnClear = document.getElementById("btn-clear");
 btnClear.addEventListener("click", clearCourses);
 //Courselist
 var courseList = document.querySelector(".course-list");
+//Hämta DOM element
+var courseCodeInput = document.getElementById("course-code");
+var courseNameInput = document.getElementById("course-name");
+var courseProgInput = document.getElementById("course-prog");
+var courseLinkInput = document.getElementById("course-link");
 function submitCourse() {
     var course = {};
-    //Hämta DOM element
-    var courseCodeInput = document.getElementById("course-code");
-    var courseNameInput = document.getElementById("course-name");
-    var courseProgInput = document.getElementById("course-prog");
-    var courseLinkInput = document.getElementById("course-link");
     //Lägga in värden i course
-    course.code = courseCodeInput.value;
-    course.name = courseNameInput.value;
+    course.code = courseCodeInput.value.trim().toUpperCase();
+    course.name = courseNameInput.value.trim();
     course.progression = courseProgInput.value;
-    course.syllabus = courseLinkInput.value;
-    createCourse(course);
-    saveCourse(course);
+    course.syllabus = courseLinkInput.value.trim();
+    if (validate(course)) {
+        createCourse(course);
+        saveCourse(course);
+    }
 }
 //Skapar Kurs via DOM
 function createCourse(course) {
@@ -32,11 +34,15 @@ function createCourse(course) {
     var courseProgP = document.createElement("p");
     var courseLinkEl = document.createElement("a");
     var iconLink = document.createElement("i");
+    var btnUpdate = document.createElement("button");
     //Fyller elementen med värden från input
     courseCodeP.innerHTML = "".concat(course.code);
     courseNameP.innerHTML = "".concat(course.name);
     courseProgP.innerHTML = "".concat(course.progression);
     courseLinkEl.innerHTML = "L\u00E4nk till kurs";
+    //Uppdatera knapp
+    btnUpdate.innerHTML = "Uppdatera";
+    btnUpdate.id = "btn-update";
     courseLinkEl.href = course.syllabus;
     iconLink.className = "fa-solid fa-arrow-up-right-from-square";
     courseLinkEl.appendChild(iconLink);
@@ -44,8 +50,15 @@ function createCourse(course) {
     courseArticle.appendChild(courseNameP);
     courseArticle.appendChild(courseProgP);
     courseArticle.appendChild(courseLinkEl);
+    courseArticle.appendChild(btnUpdate);
     //Lägger ihop elementen i varje artikel element
     courseList.appendChild(courseArticle);
+    btnUpdate.addEventListener("click", function () {
+        courseCodeInput.value = course.code;
+        courseNameInput.value = course.name;
+        courseProgInput.value = course.progression;
+        courseLinkInput.value = course.syllabus;
+    });
 }
 //Spara kursinformation i LocalStorage
 function saveCourse(course) {
@@ -82,4 +95,11 @@ function loadCourses() {
 function clearCourses() {
     localStorage.clear();
     courseList.replaceChildren(); //Tömma course listan
+}
+function validate(course) {
+    if (course.code != "" && course.name != "" &&
+        course.progression != "" && course.syllabus != "") {
+        return true;
+    }
+    return false;
 }

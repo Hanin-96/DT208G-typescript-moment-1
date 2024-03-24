@@ -21,23 +21,25 @@ btnClear.addEventListener("click", clearCourses);
 //Courselist
 let courseList = document.querySelector(".course-list") as HTMLDivElement;
 
-function submitCourse(): void {
-    let course: CourseInfo = {} as CourseInfo;
-
     //Hämta DOM element
     let courseCodeInput = document.getElementById("course-code") as HTMLInputElement;
     let courseNameInput = document.getElementById("course-name") as HTMLInputElement;
     let courseProgInput = document.getElementById("course-prog") as HTMLSelectElement;
     let courseLinkInput = document.getElementById("course-link") as HTMLInputElement;
 
-    //Lägga in värden i course
-    course.code = courseCodeInput.value;
-    course.name = courseNameInput.value;
-    course.progression = courseProgInput.value;
-    course.syllabus = courseLinkInput.value;
+function submitCourse(): void {
+    let course: CourseInfo = {} as CourseInfo;
 
-    createCourse(course);
-    saveCourse(course);
+    //Lägga in värden i course
+    course.code = courseCodeInput.value.trim().toUpperCase();
+    course.name = courseNameInput.value.trim();
+    course.progression = courseProgInput.value;
+    course.syllabus = courseLinkInput.value.trim();
+
+    if (validate(course)) {
+        createCourse(course);
+        saveCourse(course);
+    }
 }
 
 
@@ -51,12 +53,18 @@ function createCourse(course: CourseInfo): void {
     let courseProgP = document.createElement("p");
     let courseLinkEl = document.createElement("a");
     const iconLink = document.createElement("i");
+    let btnUpdate = document.createElement("button");
+
 
     //Fyller elementen med värden från input
     courseCodeP.innerHTML = `${course.code}`;
     courseNameP.innerHTML = `${course.name}`;
     courseProgP.innerHTML = `${course.progression}`;
     courseLinkEl.innerHTML = `Länk till kurs`;
+
+    //Uppdatera knapp
+    btnUpdate.innerHTML = `Uppdatera`;
+    btnUpdate.id = `btn-update`;
 
     courseLinkEl.href = course.syllabus;
 
@@ -68,9 +76,17 @@ function createCourse(course: CourseInfo): void {
     courseArticle.appendChild(courseNameP);
     courseArticle.appendChild(courseProgP);
     courseArticle.appendChild(courseLinkEl);
+    courseArticle.appendChild(btnUpdate);
 
     //Lägger ihop elementen i varje artikel element
     courseList.appendChild(courseArticle);
+
+    btnUpdate.addEventListener("click", () => {
+        courseCodeInput.value = course.code;
+        courseNameInput.value = course.name;
+        courseProgInput.value = course.progression;
+        courseLinkInput.value = course.syllabus;
+    })
 
 }
 
@@ -111,4 +127,12 @@ function loadCourses(): void {
 function clearCourses(): void {
     localStorage.clear();
     courseList.replaceChildren(); //Tömma course listan
+}
+
+function validate(course: CourseInfo): boolean {
+    if (course.code != "" && course.name != "" &&
+        course.progression != "" && course.syllabus != "") {
+        return true;
+    }
+    return false;
 }

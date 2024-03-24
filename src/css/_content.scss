@@ -44,3 +44,15 @@ body {
 
     }
 }
+
+.course-list {
+    max-width: 50rem;
+    width: 100%;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    max-width: fit-content;
+    width: 100%;
+}
