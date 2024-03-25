@@ -27,6 +27,7 @@ function submitCourse() {
 }
 //Skapar Kurs via DOM
 function createCourse(course) {
+    courseList.style.display = "block";
     //Skapar nya element
     var courseArticle = document.createElement("article");
     var courseCodeP = document.createElement("p");
@@ -36,14 +37,15 @@ function createCourse(course) {
     var iconLink = document.createElement("i");
     var btnUpdate = document.createElement("button");
     //Fyller elementen med värden från input
-    courseCodeP.innerHTML = "".concat(course.code);
-    courseNameP.innerHTML = "".concat(course.name);
-    courseProgP.innerHTML = "".concat(course.progression);
+    courseCodeP.innerHTML = "Kurskod: ".concat(course.code);
+    courseNameP.innerHTML = "Kursnamn: ".concat(course.name);
+    courseProgP.innerHTML = "Progression ".concat(course.progression);
     courseLinkEl.innerHTML = "L\u00E4nk till kurs";
     //Uppdatera knapp
     btnUpdate.innerHTML = "Uppdatera";
     btnUpdate.id = "btn-update";
     courseLinkEl.href = course.syllabus;
+    courseLinkEl.target = "_blank";
     iconLink.className = "fa-solid fa-arrow-up-right-from-square";
     courseLinkEl.appendChild(iconLink);
     courseArticle.appendChild(courseCodeP);
@@ -53,12 +55,19 @@ function createCourse(course) {
     courseArticle.appendChild(btnUpdate);
     //Lägger ihop elementen i varje artikel element
     courseList.appendChild(courseArticle);
+    resetInputFields();
     btnUpdate.addEventListener("click", function () {
         courseCodeInput.value = course.code;
         courseNameInput.value = course.name;
         courseProgInput.value = course.progression;
         courseLinkInput.value = course.syllabus;
     });
+}
+function resetInputFields() {
+    courseCodeInput.value = "";
+    courseNameInput.value = "";
+    courseProgInput.value = "A";
+    courseLinkInput.value = "";
 }
 //Spara kursinformation i LocalStorage
 function saveCourse(course) {
@@ -95,6 +104,7 @@ function loadCourses() {
 function clearCourses() {
     localStorage.clear();
     courseList.replaceChildren(); //Tömma course listan
+    courseList.style.display = "none";
 }
 function validate(course) {
     if (course.code != "" && course.name != "" &&

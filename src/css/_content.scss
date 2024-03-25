@@ -46,13 +46,17 @@ body {
 }
 
 .course-list {
+    display: none;
     max-width: 50rem;
     width: 100%;
+    margin: 2rem auto;
+    background-color: base.$bg-white;
+    padding: (base.$padding-base) * 0.5;
 }
 
 article {
     display: flex;
     flex-direction: column;
-    max-width: fit-content;
+    max-width: 25rem;
     width: 100%;
 }

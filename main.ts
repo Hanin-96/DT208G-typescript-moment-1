@@ -21,11 +21,11 @@ btnClear.addEventListener("click", clearCourses);
 //Courselist
 let courseList = document.querySelector(".course-list") as HTMLDivElement;
 
-    //Hämta DOM element
-    let courseCodeInput = document.getElementById("course-code") as HTMLInputElement;
-    let courseNameInput = document.getElementById("course-name") as HTMLInputElement;
-    let courseProgInput = document.getElementById("course-prog") as HTMLSelectElement;
-    let courseLinkInput = document.getElementById("course-link") as HTMLInputElement;
+//Hämta DOM element
+let courseCodeInput = document.getElementById("course-code") as HTMLInputElement;
+let courseNameInput = document.getElementById("course-name") as HTMLInputElement;
+let courseProgInput = document.getElementById("course-prog") as HTMLSelectElement;
+let courseLinkInput = document.getElementById("course-link") as HTMLInputElement;
 
 function submitCourse(): void {
     let course: CourseInfo = {} as CourseInfo;
@@ -46,6 +46,9 @@ function submitCourse(): void {
 //Skapar Kurs via DOM
 function createCourse(course: CourseInfo): void {
 
+    
+    courseList.style.display = "block";
+
     //Skapar nya element
     let courseArticle = document.createElement("article");
     let courseCodeP = document.createElement("p");
@@ -57,9 +60,9 @@ function createCourse(course: CourseInfo): void {
 
 
     //Fyller elementen med värden från input
-    courseCodeP.innerHTML = `${course.code}`;
-    courseNameP.innerHTML = `${course.name}`;
-    courseProgP.innerHTML = `${course.progression}`;
+    courseCodeP.innerHTML = `Kurskod: ${course.code}`;
+    courseNameP.innerHTML = `Kursnamn: ${course.name}`;
+    courseProgP.innerHTML = `Progression ${course.progression}`;
     courseLinkEl.innerHTML = `Länk till kurs`;
 
     //Uppdatera knapp
@@ -67,6 +70,7 @@ function createCourse(course: CourseInfo): void {
     btnUpdate.id = `btn-update`;
 
     courseLinkEl.href = course.syllabus;
+    courseLinkEl.target = `_blank`;
 
     iconLink.className = `fa-solid fa-arrow-up-right-from-square`;
 
@@ -81,6 +85,9 @@ function createCourse(course: CourseInfo): void {
     //Lägger ihop elementen i varje artikel element
     courseList.appendChild(courseArticle);
 
+    resetInputFields();
+
+
     btnUpdate.addEventListener("click", () => {
         courseCodeInput.value = course.code;
         courseNameInput.value = course.name;
@@ -88,6 +95,13 @@ function createCourse(course: CourseInfo): void {
         courseLinkInput.value = course.syllabus;
     })
 
+}
+
+function resetInputFields(): void {
+    courseCodeInput.value = "";
+    courseNameInput.value = "";
+    courseProgInput.value = "A";
+    courseLinkInput.value = "";
 }
 
 //Spara kursinformation i LocalStorage
@@ -127,6 +141,7 @@ function loadCourses(): void {
 function clearCourses(): void {
     localStorage.clear();
     courseList.replaceChildren(); //Tömma course listan
+    courseList.style.display = "none";
 }
 
 function validate(course: CourseInfo): boolean {

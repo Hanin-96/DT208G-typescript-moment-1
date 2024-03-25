@@ -6,15 +6,43 @@
     margin-left: 0.5rem;
 }
 
-#btn-submit {
+.btn-style {
     font-size: typography.$btn-size;
-    background-color: base.$bg-green;
     color: typography.$text-light;
     margin-top: base.$padding-base;
     cursor: pointer;
+    max-width: 50rem;
+    width: 100%;
+    padding: (base.$padding-base) * 0.5;
+    border: none;
+}
+
+#btn-submit {
+    @extend .btn-style;
+    background-color: base.$bg-green;
 }
 
 #btn-clear {
-    font-size: typography.$btn-size;
-    cursor: pointer;
+    @extend .btn-style;
+    margin: 2rem auto;
+    display: flex;
+    justify-content: center;
+    background-color: base.$bg-purple;
 }
+
+#btn-update {
+    @extend .btn-style;
+    background-color: base.$bg-green;
+    margin-bottom: (base.$padding-base) * 2;
+}
+
+select{
+    option {
+        background-color: base.$bg-white;
+    }
+
+    option:checked {
+        background-color: base.$bg-white;
+      }
+}
+

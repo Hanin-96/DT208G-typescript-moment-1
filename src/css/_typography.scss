@@ -1,7 +1,7 @@
 @use 'base';
 
 /*Typsnitt*/
-$font-base : "Source Sans 3", sans-serif;
+$font-base : "Open Sans", sans-serif;
 
 /*Typsnitt färger*/
 $text-dark: #1A1F16;
@@ -28,5 +28,15 @@ h2 {
     color: $text-light;
     padding: base.$padding-base;
     margin-bottom: base.$margin-base;;
+}
+
+p {
+    font-size: $text-p-size;
+    color: $text-dark;
+}
+
+a {
+    font-size: $text-p-size;
+    color: $text-dark;
 }
 
