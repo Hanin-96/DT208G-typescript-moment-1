@@ -13,36 +13,39 @@
     <script src="../main.js" type="module"></script>
     <script src="https://kit.fontawesome.com/5f4c540c40.js" crossorigin="anonymous" type="module"></script>
 </head>
-<header>
-    <h1>Moment 1</h1>
-</header>
 
 <body>
+    <header>
+        <h1>Moment 1</h1>
+    </header>
+
     <div class="input-field-wrap">
         <h2>Kurser</h2>
         <div class="submit-form">
-            <div class="input-container">
-                <label for="course-code">Kurskod</label>
-                <input type="text" id="course-code" name="course-code" placeholder="ex DT068G">
+            <form>
+                <div class="input-container">
+                    <label for="course-code">Kurskod</label>
+                    <input type="text" id="course-code" name="course-code" placeholder="ex DT068G">
 
-                <label for="course-name">Kursnamn</label>
-                <input type="text" id="course-name" name="course-name" placeholder="ex Webbanvändbarhet">
+                    <label for="course-name">Kursnamn</label>
+                    <input type="text" id="course-name" name="course-name" placeholder="ex Webbanvändbarhet">
 
-                <label for="course-prog">Progression</label>
-                <select name="course-prog" id="course-prog">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                </select>
+                    <label for="course-prog">Progression</label>
+                    <select name="course-prog" id="course-prog">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
 
-                <label for="course-link">Länk</label>
-                <input type="text" id="course-link" name="course-link" placeholder="ex https://www.miun.se/utbildning/kursplaner-och-utbildningsplaner/DT068G/">
+                    <label for="course-link">Länk</label>
+                    <input type="text" id="course-link" name="course-link" placeholder="ex https://www.miun.se/utbildning/kursplaner-och-utbildningsplaner/DT068G/">
 
-                <input type="submit" id="btn-submit" value="Spara Kurs">
-            </div>
-            <div class="course-list">
-                <div class="btn-update"></div>
-            </div>
+                    <input type="submit" id="btn-submit" value="Spara Kurs">
+                </div>
+            </form>
+        </div>
+        <div class="course-list">
+            <div class="btn-update"></div>
         </div>
         <button id="btn-clear">Rensa alla</button>
     </div>

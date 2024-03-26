@@ -21,8 +21,17 @@ function submitCourse() {
     course.progression = courseProgInput.value;
     course.syllabus = courseLinkInput.value.trim();
     if (validate(course)) {
-        createCourse(course);
-        saveCourse(course);
+        if (courseExists(course.code)) {
+            var duplicate = confirm("Vill du skriva över existerande kurs?");
+            if (duplicate) {
+                updateCourse(course);
+                loadCourses();
+            }
+        }
+        else {
+            saveCourse(course);
+            createCourse(course);
+        }
     }
 }
 //Skapar Kurs via DOM
@@ -71,10 +80,7 @@ function resetInputFields() {
 }
 //Spara kursinformation i LocalStorage
 function saveCourse(course) {
-    //Hämta existerande information om det finns
-    var allCourses = localStorage.getItem("savedCourses");
-    //Gör om till array
-    var allCoursesArr = JSON.parse(allCourses);
+    var allCoursesArr = getSavedCourses();
     //Om den finns, lägg till ny kurs på arrayen
     if (allCoursesArr && allCoursesArr.length > 0) {
         allCoursesArr.push(course);
@@ -89,12 +95,10 @@ function saveCourse(course) {
     localStorage.setItem("savedCourses", itemsToSave);
 }
 function loadCourses() {
-    //Hämtar lista av sparade kurser från LocalStorage
-    var allCourses = localStorage.getItem("savedCourses");
-    //Gör om till lista array
-    var allCoursesArr = JSON.parse(allCourses);
+    var allCoursesArr = getSavedCourses();
     if (allCoursesArr && allCoursesArr.length > 0) {
         //För varje sparade kurs skapas elementen i html
+        courseList.replaceChildren();
         allCoursesArr.forEach(function (course) {
             createCourse(course);
         });
@@ -112,4 +116,38 @@ function validate(course) {
         return true;
     }
     return false;
+}
+function updateCourse(course) {
+    var allCoursesArr = getSavedCourses();
+    var courseIndex = allCoursesArr.findIndex(function (savedCourse) { return savedCourse.code === course.code; });
+    // Skriver över sparade kursen med ändrade kursen om det finns en dublett
+    if (courseIndex != -1) {
+        allCoursesArr[courseIndex] = course;
+        localStorage.setItem("savedCourses", JSON.stringify(allCoursesArr));
+    }
+}
+//Se om kursen existerar
+function courseExists(code) {
+    //Hämtar lista av sparade kurser från LocalStorage
+    var allCoursesArr = getSavedCourses();
+    //Hitta index
+    var courseIndex = allCoursesArr.findIndex(function (savedCourse) { return savedCourse.code === code; });
+    //Om kurs index finns ska den returnera true
+    if (courseIndex != -1) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+function getSavedCourses() {
+    var allCourses = localStorage.getItem("savedCourses");
+    //Gör om till lista array
+    var allCoursesArr = JSON.parse(allCourses);
+    if (allCoursesArr && allCoursesArr.length > 0) {
+        return allCoursesArr;
+    }
+    else {
+        return [];
+    }
 }
