@@ -22,6 +22,7 @@ function submitCourse() {
     course.syllabus = courseLinkInput.value.trim();
     if (validate(course)) {
         if (courseExists(course.code)) {
+            //Skickar varning för att skriva över befintlig kurs
             var duplicate = confirm("Vill du skriva över existerande kurs?");
             if (duplicate) {
                 updateCourse(course);
@@ -64,6 +65,7 @@ function createCourse(course) {
     courseArticle.appendChild(btnUpdate);
     //Lägger ihop elementen i varje artikel element
     courseList.appendChild(courseArticle);
+    //Rensar input fields när vi skapat kurs
     resetInputFields();
     btnUpdate.addEventListener("click", function () {
         courseCodeInput.value = course.code;
@@ -72,6 +74,7 @@ function createCourse(course) {
         courseLinkInput.value = course.syllabus;
     });
 }
+//Rensar Input fields
 function resetInputFields() {
     courseCodeInput.value = "";
     courseNameInput.value = "";
@@ -117,8 +120,11 @@ function validate(course) {
     }
     return false;
 }
+//Uppdaterar existerande kurs
 function updateCourse(course) {
+    //Hämtar lista av sparade kurser från LocalStorage
     var allCoursesArr = getSavedCourses();
+    //Letar efter samma index på existerande kurs via kurskod
     var courseIndex = allCoursesArr.findIndex(function (savedCourse) { return savedCourse.code === course.code; });
     // Skriver över sparade kursen med ändrade kursen om det finns en dublett
     if (courseIndex != -1) {
@@ -130,7 +136,7 @@ function updateCourse(course) {
 function courseExists(code) {
     //Hämtar lista av sparade kurser från LocalStorage
     var allCoursesArr = getSavedCourses();
-    //Hitta index
+    //Letar efter samma index på existerande kurs via kurskod
     var courseIndex = allCoursesArr.findIndex(function (savedCourse) { return savedCourse.code === code; });
     //Om kurs index finns ska den returnera true
     if (courseIndex != -1) {
@@ -140,14 +146,17 @@ function courseExists(code) {
         return false;
     }
 }
+//Hämtar alla sparade kurser
 function getSavedCourses() {
+    //Hämtar från local storage
     var allCourses = localStorage.getItem("savedCourses");
     //Gör om till lista array
     var allCoursesArr = JSON.parse(allCourses);
+    //Ifall det finns sparade kurser, returnerar det som lista
     if (allCoursesArr && allCoursesArr.length > 0) {
         return allCoursesArr;
     }
     else {
-        return [];
+        return []; //Annars returnera tom lista
     }
 }
